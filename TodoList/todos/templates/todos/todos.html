@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的待办清单</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        h1 { color: #333; }
+        .add-btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .add-btn:hover { background-color: #218838; }
+        
+        .todo-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .todo-title { font-size: 1.2em; font-weight: bold; margin: 0 0 5px 0; }
+        .todo-content { color: #666; margin: 5px 0; }
+        .todo-time { font-size: 0.8em; color: #999; }
+        
+        .delete-form {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        .delete-btn:hover { background-color: #c82333; }
+        .empty-msg { color: #777; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h1>📝 我的待办清单</h1>
+
+    <!-- 新增按钮：链接到我们配置的 name='todo_add' -->
+    <a href="{% url 'todo_add' %}" class="add-btn">+ 新增待办</a>
+
+    <div class="todo-list">
+        {% for item in todo %}
+            <div class="todo-item">
+                <h3 class="todo-title">{{ item.title }}</h3>
+                <p class="todo-content">{{ item.content }}</p>
+                <p class="todo-time">⏰ 创建时间: {{ item.time|date:"Y-m-d H:i" }}</p>
+
+                <!-- 删除表单 -->
+                <!-- 注意：删除必须用 POST 方法，并带上 csrf_token -->
+                <form action="{% url 'todo_delete' item.pk %}" method="post" class="delete-form" onsubmit="return confirm('确定要删除 \'{{ item.title }}\'吗？');">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-btn">删除</button>
+                </form>
+            </div>
+        {% empty %}
+            <p class="empty-msg">还没有待办事项，快去添加一个吧！</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
