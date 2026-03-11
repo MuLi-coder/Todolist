@@ -23,10 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-f4y%2yyvjs36x7n3ysqx02$2xb&kuxfz#8l=d4nr-eqk8v^h8c"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['MuLi.pythonanywhere.com','localhost','127.0.0.1']
 
 # Application definition
 
@@ -118,4 +117,4 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = '/home/MuLi/Todolist/static'
 
-ALLOWED_HOSTS = ['MuLi.pythonanywhere.com','localhost','127.0.0.1']
+
